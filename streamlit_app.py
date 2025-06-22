@@ -16,11 +16,15 @@ def load_data():
     return df
 
 uploaded = st.file_uploader("Upload TestJIRA.xlsx", type="xlsx")
-if uploaded:
+
+if uploaded is not None:
     df = pd.read_excel(uploaded, sheet_name="Your Jira Issues")
     df.columns = [c.strip() for c in df.columns]
+    # (Rest of your analysis code goes here)
 else:
-    df = load_data()
+    st.info("Please upload a TestJIRA.xlsx file to begin.")
+    st.stop()
+
 
 # --- Preprocess Dates ---
 for col in ["Created", "Updated", "Due date", "Resolution Date"]:
